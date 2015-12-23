@@ -1,0 +1,12 @@
+### File managed with puppet ###
+### Served by:        '<%= scope.lookupvar('::servername') %>'
+### Module:           '<%= scope.to_hash['module_name'] %>'
+### Template source:  '<%= template_source %>'
+
+base <%= @ldap_base %>
+uri <%= @ldap_servers.flatten.join(', ') %>
+binddn <%= "uid=#{@ldap_bind_user},#{@ldap_base}" %>
+bindpw <%= @ldap_bind_pass %>
+tls_cacert <%= @ldap_ca_cert %>
+tls_reqcert <%= @ldap_req_cert %>
+
