@@ -4,6 +4,10 @@ describe 'ldap_ssh_keys', :type => 'class' do
 
   context "Should contain ssh-ldap-wrapper wrapper file" do
 
+    let(:facts) {
+      { :osfamily     => 'Debian' }
+    }
+
     it do
       should contain_file('/usr/local/bin/ssh-ldap-wrapper').with(
             'owner'    => 'root',
@@ -80,6 +84,21 @@ describe 'ldap_ssh_keys', :type => 'class' do
       )
       should_not contain_package('openldap-clients')
       should_not contain_user('ssh-key-lookup')
+    end
+  end
+
+  context "Should fail with unsupported OS family" do
+
+    let(:params) {
+      { :create_ldap_config    =>  true }
+    }
+
+    let(:facts) {
+     { :osfamily     => 'Solaris' }
+    }
+
+    it do
+      should raise_error(Puppet::Error, /ldap_ssh_keys - Unsupported Operating System family: Solaris/)
     end
   end
 

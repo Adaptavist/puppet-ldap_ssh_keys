@@ -23,31 +23,31 @@ class ldap_ssh_keys (
 
     # Create the SSH key retrieval script
     file { $key_wrapper_file:
-        content  => template($key_wrapper_template),
-        owner    => 'root',
-        group    => 'root',
-        mode     => 0755,
+        content => template($key_wrapper_template),
+        owner   => 'root',
+        group   => 'root',
+        mode    => '0755',
     }
 
     # If we are managing the ldap.conf file generate it
     if (str2bool($create_ldap_config)) {
         file { $ldap_config_file:
-            content  => template($ldap_config_template),
-            owner    => 'root',
-            group    => 'root',
-            mode     => 0644,
+            content => template($ldap_config_template),
+            owner   => 'root',
+            group   => 'root',
+            mode    => '0644',
         }
     }
 
     # If we are managing the lookup user create it
     if (str2bool($create_lookup_user)) {
         user { $ssh_lookup_user:
-            name      => $ssh_lookup_user,
-            comment   => 'SSH KEY Lookup User',
-            ensure    => present,
-            shell     => $ssh_lookup_shell,
-            home      => '/dev/null',
-            system    => true,
+            ensure  => present,
+            name    => $ssh_lookup_user,
+            comment => 'SSH KEY Lookup User',
+            shell   => $ssh_lookup_shell,
+            home    => '/dev/null',
+            system  => true,
         }
     }
 
