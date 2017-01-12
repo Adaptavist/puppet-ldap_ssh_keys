@@ -2,12 +2,12 @@ class ldap_ssh_keys::params {
 
     # OS specific params
     case $::osfamily {
-        Debian: {
+        'Debian': {
             $ldap_util_package = 'ldap-utils'
             $ldap_config_file  = '/etc/ldap/ldap.conf'
             $ssh_lookup_shell  = '/usr/sbin/nologin'
         }
-        RedHat: {
+        'RedHat': {
             $ldap_util_package = 'openldap-clients'
             $ldap_config_file  = '/etc/openldap/ldap.conf'
             $ssh_lookup_shell  = '/sbin/nologin'
