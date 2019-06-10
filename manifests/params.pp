@@ -30,5 +30,6 @@ class ldap_ssh_keys::params {
     $ldap_req_cert        = 'demand'
     $create_lookup_user   = false
     $ssh_lookup_user      = 'ssh-key-lookup'
+    $ldap_starttls        = true
 
 }

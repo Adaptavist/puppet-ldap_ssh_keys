@@ -14,6 +14,7 @@ class ldap_ssh_keys (
     $create_lookup_user   = $ldap_ssh_keys::params::create_lookup_user,
     $ssh_lookup_user      = $ldap_ssh_keys::params::ssh_lookup_user,
     $ssh_lookup_shell     = $ldap_ssh_keys::params::ssh_lookup_shell,
+    $ldap_starttls        = $ldap_ssh_keys::params::ldap_starttls,
     ) inherits ldap_ssh_keys::params {
 
     # Ensure the package containing ldapsearch is installed
@@ -31,6 +32,12 @@ class ldap_ssh_keys (
 
     # If we are managing the ldap.conf file generate it
     if (str2bool($create_ldap_config)) {
+
+        if (str2bool($ldap_starttls)) {
+            $starttls_flag = '-Z'
+        } else {
+            $starttls_flag = ''
+        }
         file { $ldap_config_file:
             content => template($ldap_config_template),
             owner   => 'root',
