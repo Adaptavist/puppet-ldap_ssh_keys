@@ -45,5 +45,10 @@ if [ ! -z "$BINDDN" -a ! -z "$BINDPW" ]
 fi
 
 # Find account pubkey attr
-$LDAPSEARCH <%= @starttls_flag %> -o ldif-wrap=no -LLL $CREDENTIALS -b "$ACCOUNT_BASE" "(&(${ACCOUNT_FILTER})(uid=${USER}))" $PUBKEY_ATTR \
+<% if @ldap_starttls == true or @ldap_starttls == 'true' %>
+$LDAPSEARCH -Z -o ldif-wrap=no -LLL $CREDENTIALS -b "$ACCOUNT_BASE" "(&(${ACCOUNT_FILTER})(uid=${USER}))" $PUBKEY_ATTR \
  | sed -n "s,^$PUBKEY_ATTR: \(.*\)$,\1,p"
+<% else %>
+$LDAPSEARCH -o ldif-wrap=no -LLL $CREDENTIALS -b "$ACCOUNT_BASE" "(&(${ACCOUNT_FILTER})(uid=${USER}))" $PUBKEY_ATTR \
+ | sed -n "s,^$PUBKEY_ATTR: \(.*\)$,\1,p"
+<% end %>
