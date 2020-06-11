@@ -1,5 +1,5 @@
 name 'adaptavist/ldap_ssh_keys'
-version '1.0.2'
+version '1.0.3'
 source 'https://github.com/Adaptavist/puppet-ldap_ssh_keys.git'
 author 'mhope'
 summary 'ldap_ssh_keys Module' 
